@@ -2,7 +2,7 @@
 (function() {
 "use strict";
 var runner;
-var testharness_properties = {output:false,
+var testharness_properties = window.testharness_properties || {output:false,
                               timeout_multiplier:1};
 
 function Manifest(path) {
@@ -559,8 +559,8 @@ TestControl.prototype = {
     },
 
     get_testharness_settings: function() {
-        return {timeout_multiplier: parseFloat(this.timeout_input.value),
-                output: this.render_checkbox.checked};
+        return Object.assign({timeout_multiplier: parseFloat(this.timeout_input.value),
+                output: this.render_checkbox.checked}, testharness_properties);
     },
 
     get_use_regex: function() {
@@ -840,4 +840,6 @@ window.completion_callback = function(tests, status) {
 };
 
 window.addEventListener("DOMContentLoaded", setup, false);
+
+window.VisualOutput = VisualOutput;
 })();
